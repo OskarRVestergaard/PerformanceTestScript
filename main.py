@@ -108,39 +108,58 @@ def runTests(image_name,  test_name, iterations,):
         print(container_name)
         CollectTestData1(image_name, container_name, test_name)
         # deleteFirstLastLine(path)
+def gb(x, pos):
+    'The two args are the value and tick position'
+    return '%1.1fGB' % (x * 1.25*1e-10)
+# def y_fmt(x, y):
+#     return '{:2.2e}'.format(x).replace('e', 'x10^')
 
+# def procent(x, pos):
+#     'The two args are the value and tick position'
+#     return '%1.1fprocent' % (x )
+import matplotlib.ticker as mtick
+from matplotlib.ticker import FuncFormatter
+import matplotlib.ticker as ticker
 def createPlots(dataSetPaths):
     # dataSetPaths = ['formattedPos0', 'formattedPos1', 'formattedPos2']
     figure, axis = plt.subplots(3, 1, figsize=(20, 15))
     for i in dataSetPaths:
         data = GetDataFrame(i)
+        # formatterProcent = FuncFormatter(procent)
         axis[0].plot(data.index / 2, "mem_percentage", data=data, drawstyle="steps", linewidth='4.5')
+        # axis[0].yaxis.set_major_formatter(ticker.PercentFormatter(xmax=5))
+        axis[0].yaxis.set_major_formatter(mtick.PercentFormatter(xmax=100))
         axis[0].set_title("Mermory %", fontdict={'fontsize': '22', 'weight': '1000'})
         axis[0].set_xlabel('time [s]', fontdict={'fontsize': '22', 'weight': '1000'})
-        axis[0].set_ylabel("memory %", fontdict={'fontsize': '22', 'weight': '1000'})
+        axis[0].set_ylabel("Memory", fontdict={'fontsize': '22', 'weight': '1000'})
         # axis[0].grid()
 
         # For Cosine Function
+        formatterGB = FuncFormatter(gb)
         axis[1].plot(data.index / 2, "mem_usage", data=data, drawstyle="steps", linewidth='4.5')
+        axis[1].yaxis.set_major_formatter(formatterGB)
         axis[1].set_title("Memory Usage", fontdict={'fontsize': '22', 'weight': '1000'})
         axis[1].set_xlabel('time [s]', fontdict={'fontsize': '22', 'weight': '1000'})
-        axis[1].set_ylabel("memory bit", fontdict={'fontsize': '22', 'weight': '1000'})
+        axis[1].set_ylabel("Memory", fontdict={'fontsize': '22', 'weight': '1000'})
         # axis[1].grid()
 
         axis[2].plot(data.index / 2, "cpu_percentage", data=data, drawstyle="steps", linewidth='4.5')
+        axis[2].yaxis.set_major_formatter(mtick.PercentFormatter(xmax=100))
         axis[2].set_title("CPU %", fontdict={'fontsize': '22', 'weight': '1000'})
         axis[2].set_xlabel('time [s]', fontdict={'fontsize': '22', 'weight': '1000'})
-        axis[2].set_ylabel("cpu %", fontdict={'fontsize': '22', 'weight': '1000'})
+        axis[2].set_ylabel("CPU", fontdict={'fontsize': '22', 'weight': '1000'})
 
     axis[0].grid(axis='x')
     axis[1].grid(axis='x')
     axis[2].grid(axis='x')
 
+    axis[0].tick_params(axis='both',which='major', labelsize=24)
+    axis[1].tick_params(axis='both', which='major', labelsize=24)
+    axis[2].tick_params(axis='both', which='major', labelsize=24)
     # axis[0].set_ylim([0.2,0.4])
     #
     # axis[1].set_ylim([6.5e8, 8.5e8])
     # axis[2].set_ylim([0, 270])
-
     plt.subplots_adjust(hspace=1)
     plt.tight_layout(pad=5.0)
 
@@ -167,10 +186,10 @@ if __name__ == '__main__':
     dataSetPaths4 =[ 'TestSlow8PeerPoS0','TestSlow8PeerPoS1','TestSlow8PeerPoS2']
     dataSetPaths5 =[ 'TestSlow8PeerPoW0','TestSlow8PeerPoW1','TestSlow8PeerPoW2']
     createPlots(dataSetPaths1)
-    createPlots(dataSetPaths2)
-    createPlots(dataSetPaths3)
-    createPlots(dataSetPaths4)
-    createPlots(dataSetPaths5)
+    # createPlots(dataSetPaths2)
+    # createPlots(dataSetPaths3)
+    # createPlots(dataSetPaths4)
+    # createPlots(dataSetPaths5)
 # ---------------------- For generating plots uncomment above
 
     # ----------------------------
