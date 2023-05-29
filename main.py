@@ -7,6 +7,7 @@ import matplotlib.pylab as plt
 import pandas as pd
 import matplotlib.ticker as mtick
 from matplotlib.ticker import FuncFormatter
+import numpy as np 
 
 ROOT_PATH = os.getcwd()
 
@@ -90,39 +91,34 @@ def gb(x, pos):
 
 
 def createPlots(dataSetPaths):
-    figure, axis = plt.subplots(3, 1, figsize=(20, 15))
+    figure, axis = plt.subplots(2, 1, figsize=(20, 15))
     for i in dataSetPaths:
         data = GetDataFrame(i)
-        axis[0].plot(data.index / 2, "mem_percentage", data=data, drawstyle="steps", linewidth='4.5', label=f"{i}")
-        axis[0].yaxis.set_major_formatter(mtick.PercentFormatter(xmax=100))
-        axis[0].set_title("Mermory %", fontdict={'fontsize': '22', 'weight': '1000'})
+
+        # For Cosine Function
+        formatterGB = FuncFormatter(gb)
+        plt.ylim([0, 1000])
+        axis[0].plot(data.index / 2, "mem_usage", data=data, drawstyle="steps", linewidth='4.5', label=f"{i}")
+        axis[0].yaxis.set_major_formatter(formatterGB)
+        axis[0].set_title("Memory Usage", fontdict={'fontsize': '22', 'weight': '1000'})
         axis[0].set_xlabel('time [s]', fontdict={'fontsize': '22', 'weight': '1000'})
         axis[0].set_ylabel("Memory", fontdict={'fontsize': '22', 'weight': '1000'})
         axis[0].legend(loc="lower right")
 
-        # For Cosine Function
-        formatterGB = FuncFormatter(gb)
-        axis[1].plot(data.index / 2, "mem_usage", data=data, drawstyle="steps", linewidth='4.5', label=f"{i}")
-        axis[1].yaxis.set_major_formatter(formatterGB)
-        axis[1].set_title("Memory Usage", fontdict={'fontsize': '22', 'weight': '1000'})
+        axis[1].plot(data.index / 2, "cpu_percentage", data=data, drawstyle="steps", linewidth='4.5', label=f"{i}")
+        axis[1].yaxis.set_major_formatter(mtick.PercentFormatter(xmax=100))
+        axis[1].set_title("CPU %", fontdict={'fontsize': '22', 'weight': '1000'})
         axis[1].set_xlabel('time [s]', fontdict={'fontsize': '22', 'weight': '1000'})
-        axis[1].set_ylabel("Memory", fontdict={'fontsize': '22', 'weight': '1000'})
-        axis[1].legend(loc="lower right")
-
-        axis[2].plot(data.index / 2, "cpu_percentage", data=data, drawstyle="steps", linewidth='4.5', label=f"{i}")
-        axis[2].yaxis.set_major_formatter(mtick.PercentFormatter(xmax=100))
-        axis[2].set_title("CPU %", fontdict={'fontsize': '22', 'weight': '1000'})
-        axis[2].set_xlabel('time [s]', fontdict={'fontsize': '22', 'weight': '1000'})
-        axis[2].set_ylabel("CPU", fontdict={'fontsize': '22', 'weight': '1000'})
-        axis[2].legend(loc="upper right")
+        axis[1].set_ylabel("CPU", fontdict={'fontsize': '22', 'weight': '1000'})
+        axis[1].legend(loc="upper right")
 
     axis[0].grid(axis='x')
+    axis[0].grid(axis='y')
     axis[1].grid(axis='x')
-    axis[2].grid(axis='x')
+    axis[1].grid(axis='y')
 
     axis[0].tick_params(axis='both', which='major', labelsize=24)
     axis[1].tick_params(axis='both', which='major', labelsize=24)
-    axis[2].tick_params(axis='both', which='major', labelsize=24)
 
     plt.subplots_adjust(hspace=1)
     plt.tight_layout(pad=5.0)
@@ -151,8 +147,8 @@ if __name__ == '__main__':
     dataSetPaths4 = ['TestSlow8PeerPoS0', 'TestSlow8PeerPoS1', 'TestSlow8PeerPoS2']
     dataSetPaths5 = ['TestSlow8PeerPoW0', 'TestSlow8PeerPoW1', 'TestSlow8PeerPoW2']
     createPlots(dataSetPaths1)
-    # createPlots(dataSetPaths2)
-    # createPlots(dataSetPaths3)
-    # createPlots(dataSetPaths4)
-    # createPlots(dataSetPaths5)
+    createPlots(dataSetPaths2)
+    createPlots(dataSetPaths3)
+    createPlots(dataSetPaths4)
+    createPlots(dataSetPaths5)
 # ---------------------- For generating plots uncomment above
