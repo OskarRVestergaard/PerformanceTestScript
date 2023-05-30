@@ -97,14 +97,17 @@ def createPlots(dataSetPaths):
 
         # For Cosine Function
         formatterGB = FuncFormatter(gb)
-        plt.ylim([0, 1000])
+
         axis[0].plot(data.index / 2, "mem_usage", data=data, drawstyle="steps", linewidth='4.5', label=f"{i}")
         axis[0].yaxis.set_major_formatter(formatterGB)
         axis[0].set_title("Memory Usage", fontdict={'fontsize': '22', 'weight': '1000'})
         axis[0].set_xlabel('time [s]', fontdict={'fontsize': '22', 'weight': '1000'})
         axis[0].set_ylabel("Memory", fontdict={'fontsize': '22', 'weight': '1000'})
         axis[0].legend(loc="lower right")
+        axis[0].set_ylim([0,18* 1.25 * 1e10])
+        axis[0].set_yticks((1* 1e10,2* 1e10,10* 1e10))
 
+        axis[1].set_ylim([0,1000])
         axis[1].plot(data.index / 2, "cpu_percentage", data=data, drawstyle="steps", linewidth='4.5', label=f"{i}")
         axis[1].yaxis.set_major_formatter(mtick.PercentFormatter(xmax=100))
         axis[1].set_title("CPU %", fontdict={'fontsize': '22', 'weight': '1000'})
@@ -122,7 +125,8 @@ def createPlots(dataSetPaths):
 
     plt.subplots_adjust(hspace=1)
     plt.tight_layout(pad=5.0)
-
+    # plt.xticks(np.arange(min(x), max(x) + 1, 2))
+    # plt.yticks(np.arange(0, 2500000000000, 4))
     plt.show()
 
 
@@ -146,9 +150,9 @@ if __name__ == '__main__':
     dataSetPaths3 = ['TestSlow4PeerPoS0', 'TestSlow4PeerPoS1', 'TestSlow4PeerPoS2']
     dataSetPaths4 = ['TestSlow8PeerPoS0', 'TestSlow8PeerPoS1', 'TestSlow8PeerPoS2']
     dataSetPaths5 = ['TestSlow8PeerPoW0', 'TestSlow8PeerPoW1', 'TestSlow8PeerPoW2']
-    createPlots(dataSetPaths1)
-    createPlots(dataSetPaths2)
+    # createPlots(dataSetPaths1)
+    # createPlots(dataSetPaths2)
     createPlots(dataSetPaths3)
-    createPlots(dataSetPaths4)
-    createPlots(dataSetPaths5)
+    # createPlots(dataSetPaths4)
+    # createPlots(dataSetPaths5)
 # ---------------------- For generating plots uncomment above
