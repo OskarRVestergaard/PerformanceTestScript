@@ -95,7 +95,7 @@ def createPlots(dataSetPaths):
     for i in dataSetPaths:
         data = GetDataFrame(i)
 
-        # For Cosine Function
+
         formatterGB = FuncFormatter(gb)
 
         axis[0].plot(data.index / 2, "mem_usage", data=data, drawstyle="steps", linewidth='4.5', label=f"{i}")
@@ -133,8 +133,6 @@ def createPlots(dataSetPaths):
 
     plt.subplots_adjust(hspace=1)
     plt.tight_layout(pad=5.0)
-    # plt.xticks(np.arange(min(x), max(x) + 1, 2))
-    # plt.yticks(np.arange(0, 2500000000000, 4))
     plt.show()
 
 
