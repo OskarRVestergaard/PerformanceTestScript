@@ -103,17 +103,25 @@ def createPlots(dataSetPaths):
         axis[0].set_title("Memory Usage", fontdict={'fontsize': '22', 'weight': '1000'})
         axis[0].set_xlabel('time [s]', fontdict={'fontsize': '22', 'weight': '1000'})
         axis[0].set_ylabel("Memory", fontdict={'fontsize': '22', 'weight': '1000'})
-        axis[0].legend(loc="lower right")
-        axis[0].set_ylim([0,18* 1.25 * 1e10])
-        axis[0].set_yticks((1* 1e10,2* 1e10,10* 1e10))
+        axis[0].legend(loc="lower right", prop = { "size": 20 })
+        axis[0].set_ylim([0,0.2* 1.25 * 1e10])
+        # axis[0].set_ylim([0,20* 1.25 * 1e10])
+        
+        # axis[0].set_ylim([0,20* 0.8 * 1e10])
+        # axis[0].set_yticks(tuple(i * 0.8 * 1e10 for i in range(0, 21, 5)))
+        
+        axis[0].set_yticks((0, 0.08*1e10, 0.16*1e10, 0.24*1e10))
 
         axis[1].set_ylim([0,1000])
+        axis[1].set_xlim([0,800])
+        axis[1].set_yticks([0, 200, 400, 600, 800, 1000])
+        # axis[1].set_yticks([i * 100 for i in range(11)])
         axis[1].plot(data.index / 2, "cpu_percentage", data=data, drawstyle="steps", linewidth='4.5', label=f"{i}")
         axis[1].yaxis.set_major_formatter(mtick.PercentFormatter(xmax=100))
         axis[1].set_title("CPU %", fontdict={'fontsize': '22', 'weight': '1000'})
         axis[1].set_xlabel('time [s]', fontdict={'fontsize': '22', 'weight': '1000'})
         axis[1].set_ylabel("CPU", fontdict={'fontsize': '22', 'weight': '1000'})
-        axis[1].legend(loc="upper right")
+        axis[1].legend(loc="upper right", prop = { "size": 20 })
 
     axis[0].grid(axis='x')
     axis[0].grid(axis='y')
@@ -152,7 +160,7 @@ if __name__ == '__main__':
     dataSetPaths5 = ['TestSlow8PeerPoW0', 'TestSlow8PeerPoW1', 'TestSlow8PeerPoW2']
     # createPlots(dataSetPaths1)
     # createPlots(dataSetPaths2)
-    createPlots(dataSetPaths3)
+    # createPlots(dataSetPaths3)
     # createPlots(dataSetPaths4)
-    # createPlots(dataSetPaths5)
+    createPlots(dataSetPaths5)
 # ---------------------- For generating plots uncomment above
