@@ -42,7 +42,7 @@ def GetDataFrame(path):
     df = df[df.NAME != "NAME"]  # remove repeating header
     df = df[df.NAME != "0.00%"]  # remove first error
 
-    # Parse the data
+    # To parse the data inspiration was taken from https://github.com/Naartti/docker-stats-analyse-with-jupyter-notebook/blob/main/src/main.ipynb
     def percentage_to_float(df_col):
         return df_col.apply(lambda x: float(x[0:-1]))
 
